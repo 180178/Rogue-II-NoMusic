@@ -87,18 +87,16 @@ namespace Rogue_II_NoMusic
         }
         public void mapCollide(Player p)
         {
-            Rect player = RectangleToRect(p.rectangle);
             for (int i = 0; i < rectangle.Count; i++)
             {
-                Rect check = RectangleToRect(rectangle[i]);
-                if (check.IntersectsWith(player) && rectangle[i].Fill == Brushes.Black)
+                Point point = new Point(Canvas.GetLeft(rectangle[i]), Canvas.GetTop(rectangle[i]));
+                if (point == p.pos &&rectangle[i].Fill == Brushes.Salmon)
                 {
                     p.pos = p.previouspos;
                     Canvas.SetLeft(p.rectangle, p.pos.X);
                     Canvas.SetTop(p.rectangle, p.pos.Y);
                 }
             }
-
         }
         public Rect RectangleToRect(Rectangle rectangle)
         {
