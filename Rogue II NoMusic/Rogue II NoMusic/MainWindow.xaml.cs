@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -241,9 +241,11 @@ namespace Rogue_II_NoMusic
                     //Console.WriteLine("KeyDown Event" + e.Key.ToString());
                     player.move(e.Key);
                     map.mapCollide(player);
+                    enemy.enemyMove(player);
                     player.melee(enemy, lblCombat, lblCombatEnemy);
-                    screenUpdate();
                     player.XPUpdate();
+                    player.death(lblCombat);
+                    screenUpdate();
 
                 }
             }
