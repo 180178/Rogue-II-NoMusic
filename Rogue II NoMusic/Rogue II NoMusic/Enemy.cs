@@ -127,7 +127,126 @@ namespace Rogue_II_NoMusic
 
         public void enemyMove()
         {
+             Point previousPos = enemyPos;
+            //Player down and right from enemy
+            if (player.pos.X >= enemyPos.X && player.pos.Y >= enemyPos.Y)
+            {
+                if (player.pos.X - enemyPos.X >= player.pos.Y - enemyPos.Y)
+                {
+                    if (player.pos.X <= enemyPos.X)
+                    {
+                        enemyPos.X -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.X += 30;
+                    }
+                }
+                else
+                {
+                    if (player.pos.Y <= enemyPos.Y)
+                    {
+                        enemyPos.Y -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.Y += 30;
+                    }
+                }
 
+
+                Canvas.SetLeft(enemyRectangle, enemyPos.X);
+                Canvas.SetTop(enemyRectangle, enemyPos.Y);
+            }
+            //down and left
+            if (player.pos.X <= enemyPos.X && player.pos.Y >= enemyPos.Y)
+            {
+                if (enemyPos.X - player.pos.X >= player.pos.Y - enemyPos.Y)
+                {
+                    if (player.pos.X <= enemyPos.X)
+                    {
+                        enemyPos.X -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.X += 30;
+                    }
+                }
+                else
+                {
+                    if (player.pos.Y <= enemyPos.Y)
+                    {
+                        enemyPos.Y -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.Y += 30;
+                    }
+                }
+                Canvas.SetLeft(enemyRectangle, enemyPos.X);
+                Canvas.SetTop(enemyRectangle, enemyPos.Y);
+            }
+            // up and right 
+            if (player.pos.X >= enemyPos.X && player.pos.Y <= enemyPos.Y)
+            {
+                if (enemyPos.X - player.pos.X >= enemyPos.Y - player.pos.Y)
+                {
+                    if (player.pos.X <= enemyPos.X)
+                    {
+                        enemyPos.X -= 30;
+                    }
+                    else
+                    {
+                        enemyPos.X += 30;
+                    }
+                }
+                else
+                {
+                    if (player.pos.Y >= enemyPos.Y)
+                    {
+                        enemyPos.Y += 30;
+                    }
+                    else
+                    {
+                        enemyPos.Y -= 30;
+                    }
+                }
+                Canvas.SetLeft(enemyRectangle, enemyPos.X);
+                Canvas.SetTop(enemyRectangle, enemyPos.Y);
+            }
+            // up and left
+            if (player.pos.X <= enemyPos.X && player.pos.Y <= enemyPos.Y)
+            {
+
+                if (enemyPos.X - player.pos.X >= enemyPos.Y - player.pos.Y)
+                {
+                    if (player.pos.X >= enemyPos.X)
+                    {
+                        enemyPos.X += 30;
+                    }
+                    else
+                    {
+                        enemyPos.X -= 30;
+                    }
+                }
+                else
+                {
+                    if (player.pos.Y >= enemyPos.Y)
+                    {
+                        enemyPos.Y += 30;
+                    }
+                    else
+                    {
+                        enemyPos.Y -= 30;
+                    }
+                }
+                Canvas.SetLeft(enemyRectangle, enemyPos.X);
+                Canvas.SetTop(enemyRectangle, enemyPos.Y);
+            }
+            /*if(enemyPos == player.pos)
+            {
+                enemyPos = previousPos;
+            }*/
         }
 
         public void death()
