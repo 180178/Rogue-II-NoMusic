@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,13 +13,13 @@ namespace Rogue_II_NoMusic
 {
     class Enemy
     {
-        Player player;
+        //Player player;
         Canvas canvas;
         Map map;
         int levelProgress = 1;
         Window window;
         //the point where the enemy is located
-        public Point enemyPos = new Point(x: 1, y: 1);
+        public Point enemyPos = new Point(300, 300);
         //the enemyRectangle is where the sprite will be, and there will be collision with it
         public Rectangle enemyRectangle = new Rectangle();
         //the minibossRectangle is where the mini boss sprite will be.
@@ -125,7 +125,7 @@ namespace Rogue_II_NoMusic
 
         }
 
-        public void enemyMove()
+        public void enemyMove(Player player)
         {
              Point previousPos = enemyPos;
             //Player down and right from enemy
@@ -252,7 +252,7 @@ namespace Rogue_II_NoMusic
         public void death()
         {
             canvas.Children.Remove(enemyRectangle);
-            player.XP = player.XP + (level * 10);
+            //player.XP = player.XP + (level * 10);
         }
     }
 }
