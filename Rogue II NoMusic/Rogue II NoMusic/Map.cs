@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace Rogue_II_NoMusic
         string tile;
         public int xPos;
         public int yPos = 0;
-        public string[,] grid = new string[12, 9];
+        public string[,] grid = new string[40, 20];
         int lineNumber = -1;
 
         public Map(Canvas C)
@@ -51,9 +51,9 @@ namespace Rogue_II_NoMusic
             }
 
             //Takes the values from the grid array and creates rectangles (which represent the map) on the screen.
-            for (int y = 0; y < 9; y++)
+            for (int y = 0; y < 20; y++)
             {
-                for (int x = 0; x < 12; x++)
+                for (int x = 0; x < 40; x++)
                 {
                     xPos = (x * 30);
                     yPos = (y * 30);
@@ -73,7 +73,7 @@ namespace Rogue_II_NoMusic
                     //Walls.
                     if (grid[x, y] == "|")
                     {
-                        rectangle[rectangle.Count - 1].Fill = Brushes.Salmon;
+                        rectangle[rectangle.Count - 1].Fill = Brushes.CornflowerBlue;
                     }
 
                     //Inside the room.
@@ -94,6 +94,8 @@ namespace Rogue_II_NoMusic
                 if (check.IntersectsWith(player) && rectangle[i].Fill == Brushes.Black)
                 {
                     p.pos = p.previouspos;
+                    Canvas.SetLeft(p.rectangle, p.pos.X);
+                    Canvas.SetTop(p.rectangle, p.pos.Y);
                 }
             }
 
