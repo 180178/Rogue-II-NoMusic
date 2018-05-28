@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,7 +45,7 @@ namespace Rogue_II_NoMusic
         Window window;
         int counter = 0;
         public Point previouspos;
-        public Point pos = new Point(100, 100);
+        public Point pos = new Point(90,90);
         public Rectangle rectangle;
         public Player(Canvas c, Window w)
         {
@@ -154,51 +154,85 @@ namespace Rogue_II_NoMusic
         //Change to Enemy enemy
         public void melee(Enemy enemy, Label lp, Label le)
         {
+            Console.WriteLine("Enemy " + enemy.enemyPos.ToString());
+            Console.WriteLine("Player " + pos.ToString());
             Point[] points = new Point[4];
             Point left = new Point(pos.X - rectangle.Width, pos.Y);
-            Point right = new Point(pos.X + (rectangle.Width * 2), pos.Y);
+            points[0] = left;
+            Point right = new Point(pos.X + (rectangle.Width ), pos.Y);
+            points[1] = right;
             Point up = new Point(pos.X, pos.Y - rectangle.Height);
-            Point down = new Point(pos.X, pos.Y + (rectangle.Height * 2));
-            for (int i = 0; i < 4; i++)
-            {
-                if (r.Next(0, Level + 1) < Level)
-                {
-                    if (enemy.enemyPos == points[i])
-                    {
-                        int dmg = Strength - enemy.armour;
-                        enemy.hp -= dmg;
-                        XP += enemy.level;
-                        lp.Content = "You Hit";
-                    }
-                    if (enemy.bossPos == points[i])
-                    {
-                        int dmg = Strength - enemy.bossArmour;
-                        enemy.bossHP -= dmg;
-                        XP += enemy.bosslevel;
-                        lp.Content = "You Hit";
-                    }
-                }
-                else
-                {
-                    if (enemy.bossPos == points[i])
-                    {
-                        lp.Content = "You Miss";
-                    }
-                }
-                if (r.Next(0, enemy.level + 1) < enemy.level)
-                {
-                    if (enemy.enemyPos == points[i])
-                    {
-                        le.Content = enemy.enemyType + " Hit";
-                    }
-                }
-                else
-                {
-                    if (enemy.enemyPos == points[i])
-                    {
-                        le.Content = enemy.enemyType + " Maybe Not";
-                    }
+            points[2] = up;
+            Point down = new Point(pos.X, pos.Y + (rectangle.Height ));
+            points[3] = down;
 
+            bool combat = false;
+            if (enemy.alive == true && Alive == true)
+            {
+
+
+                for (int i = 0; i < 4; i++)
+                {
+                    if (enemy.enemyPos == points[i])
+                    {
+                        combat = true;
+                        if (r.Next(0, Level + 1) < Level)
+                        {
+                            int dmg = Strength - enemy.armour;
+                            enemy.hp -= dmg;
+                            lp.Content = "You Hit";
+                        }
+                        else
+                        {
+                            lp.Content = "You Miss";
+                        }
+                        if (r.Next(0, enemy.level + 1) < enemy.level)
+                        {
+                            le.Content = enemy.enemyType + " Hit";
+                            int dmg = enemy.strength - Armour;
+                            HP -= dmg;
+                        }
+                        else
+                        {
+                            le.Content = enemy.enemyType + " Miss";
+                        }
+
+                    }
+                    if (enemy.bossPos == points[i])
+                    {
+                        combat = true;
+                        if (r.Next(0, Level + 1) < Level)
+                        {
+                            int dmg = Strength - enemy.bossArmour;
+                            enemy.bossHP -= dmg;
+                            XP += enemy.bosslevel;
+                            lp.Content = "You Hit";
+                        }
+                        else
+                        {
+                            lp.Content = "You Miss";
+                        }
+                        if (r.Next(0, enemy.bosslevel + 1) < enemy.bosslevel)
+                        {
+                            le.Content = "Mini Boss" + " Hit";
+                        }
+                        else
+                        {
+                            le.Content = "Mini Boss" + " Miss";
+                        }
+                    }
+                }
+                if (combat == false)
+                {
+                    le.Content = "";
+                    lp.Content = "";
+                }
+                Console.WriteLine(combat.ToString());
+                if (enemy.hp <= 0)
+                {
+                    le.Content = enemy.enemyType.ToString() + " Defeated";
+                    enemy.death();
+                    XP += enemy.level;
                 }
             }
 
@@ -222,10 +256,19 @@ namespace Rogue_II_NoMusic
         public void XPUpdate()
         {
             int previousXP = XP;
-            if (XP == (Level * Level * Level * Level))
+            if (XP >= (Level * Level * Level * Level))
             {
                 XP = previousXP - Level * Level * Level * Level;
                 Level += 1;
+            }
+        }
+        public void death(Label l)
+        {
+            if(HP<=0)
+            {
+                Alive = false;
+                l.Content = "Player Defeated";
+                rectangle.Visibility = Visibility.Hidden;
             }
         }
 
