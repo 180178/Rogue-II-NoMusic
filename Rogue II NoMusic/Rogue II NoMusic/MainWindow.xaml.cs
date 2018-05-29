@@ -244,7 +244,7 @@ namespace Rogue_II_NoMusic
                     enemy.enemyMove(player);
                     player.melee(enemy, lblCombat, lblCombatEnemy);
                     player.XPUpdate();
-                    player.death(lblCombat);
+                    player.death(lblCombat,gameover);
                     screenUpdate();
 
                 }
