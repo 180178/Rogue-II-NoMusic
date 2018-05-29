@@ -262,13 +262,18 @@ namespace Rogue_II_NoMusic
                 Level += 1;
             }
         }
-        public void death(Label l)
+        public void death(Label l , Gameover gameover)
         {
             if(HP<=0)
             {
                 Alive = false;
                 l.Content = "Player Defeated";
                 rectangle.Visibility = Visibility.Hidden;
+                gameover.gameoverScreen.Visibility = Visibility.Visible;
+                Label lblGameoverText = new Label();
+                lblGameoverText.Content = "Game Over.";
+                Label lblPlayAgain = new Label();
+                lblPlayAgain.Content = "Press 1 to Play Again.";
             }
         }
 
