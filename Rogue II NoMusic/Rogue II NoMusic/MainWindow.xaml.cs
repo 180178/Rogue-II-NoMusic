@@ -65,7 +65,7 @@ namespace Rogue_II_NoMusic
             {
                 PlayIntro();
             }
-
+            gameover = new Gameover(canvas, this);
             controls = new Rectangle();
             controls.Visibility = Visibility.Hidden;
             controls.Height = 800;
