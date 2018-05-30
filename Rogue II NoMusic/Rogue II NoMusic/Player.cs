@@ -288,6 +288,21 @@ namespace Rogue_II_NoMusic
                 lblGameoverText.Content = "Game Over.";
                 Label lblPlayAgain = new Label();
                 lblPlayAgain.Content = "Press 1 to Play Again.";
+                Canvas.SetTop(lblPlayAgain, 690);
+                Canvas.SetLeft(lblPlayAgain, 300);
+                Canvas.SetTop(lblGameoverText, 690);
+                lblGameoverText.FontSize = 30;
+                lblPlayAgain.FontSize = 30;
+                lblPlayAgain.Foreground = Brushes.White;
+                lblGameoverText.Foreground = Brushes.White;
+                canvas.Children.Add(lblGameoverText);
+                canvas.Children.Add(lblPlayAgain);
+                if(Keyboard.IsKeyDown(Key.D1))
+                {
+                    System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                    Application.Current.Shutdown();
+
+                }
             }
         }
         public void enemydont(Enemy e)
