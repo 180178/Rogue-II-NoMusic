@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +26,7 @@ namespace Rogue_II_NoMusic
         //string[] songList = { "04 Emperor's Throne Room.mp3", "03 Battle Of The Heroes.mp3", "02 The Millennium Falcon_Imperial Cruiser Pursuit.mp3", "10 Mos Eisley Spaceport.mp3", "11 Cantina Band.mp3", "02 Duel Of The Fates.mp3", "12 Cantina Band #2.mp3" };
         Enemy enemy;
         Player player;
+        Gameover gameover;
         int Level = 1;
         Map map;
         //All for the Intro - Ignore
@@ -43,6 +44,7 @@ namespace Rogue_II_NoMusic
         double textwidth = 800;
         int otherCounter = 0;
         bool IntroHasRun = false;
+        int keycounter = 0;
         //Intro Variables Over
 
         //UI Elements
@@ -189,6 +191,16 @@ namespace Rogue_II_NoMusic
         //Everything happens on a KeyDown Event
         private void key(object sender, KeyEventArgs e)
         {
+            keycounter++;
+            if(keycounter==25)
+            {
+                keycounter = 0;
+                if(player.HP<player.MaxHP)
+                {
+                    player.HP += 1;
+                }
+                
+            }
             if (e.Key == Key.F1)
             {
                 if (controls.Visibility == Visibility.Hidden)
@@ -242,9 +254,11 @@ namespace Rogue_II_NoMusic
                     player.move(e.Key);
                     map.mapCollide(player);
                     enemy.enemyMove(player);
+                    player.enemydont(enemy);
+                    map.mapCollide(enemy);
                     player.melee(enemy, lblCombat, lblCombatEnemy);
                     player.XPUpdate();
-                    player.death(lblCombat,gameover);
+                    player.death(lblCombat, gameover);
                     screenUpdate();
 
                 }

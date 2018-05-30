@@ -75,6 +75,7 @@ namespace Rogue_II_NoMusic
                     rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("brick.png", UriKind.Relative)));
                     break;
                 case Type.Collectible:
+                    GoldCount = r.Next(20,50);
                     rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("coll.png", UriKind.Relative)));
                     break;
                 default:

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,11 +24,16 @@ namespace Rogue_II_NoMusic
         public int xPos;
         public int yPos = 0;
         public string[,] grid = new string[40, 20];
+        Brush wallcolour;
         int lineNumber = -1;
 
         public Map(Canvas C)
         {
             canvas = C;
+            if(mapNum == 0)
+            {
+                wallcolour = Brushes.CornflowerBlue;
+            }
         }
 
         //A method to generate a given map from the read file.
@@ -73,7 +78,7 @@ namespace Rogue_II_NoMusic
                     //Walls.
                     if (grid[x, y] == "|")
                     {
-                        rectangle[rectangle.Count - 1].Fill = Brushes.CornflowerBlue;
+                        rectangle[rectangle.Count - 1].Fill = wallcolour;
                     }
 
                     //Inside the room.
@@ -90,11 +95,24 @@ namespace Rogue_II_NoMusic
             for (int i = 0; i < rectangle.Count; i++)
             {
                 Point point = new Point(Canvas.GetLeft(rectangle[i]), Canvas.GetTop(rectangle[i]));
-                if (point == p.pos &&rectangle[i].Fill == Brushes.Salmon)
+                if (point == p.pos && rectangle[i].Fill == wallcolour)
                 {
                     p.pos = p.previouspos;
                     Canvas.SetLeft(p.rectangle, p.pos.X);
                     Canvas.SetTop(p.rectangle, p.pos.Y);
+                }
+            }
+        }
+        public void mapCollide(Enemy e)
+        {
+            for (int i = 0; i < rectangle.Count; i++)
+            {
+                Point point = new Point(Canvas.GetLeft(rectangle[i]), Canvas.GetTop(rectangle[i]));
+                if (point == e.enemyPos && rectangle[i].Fill == wallcolour)
+                {
+                    e.enemyPos = e.previousPos;
+                    Canvas.SetLeft(e.enemyRectangle, e.enemyPos.X);
+                    Canvas.SetTop(e.enemyRectangle, e.enemyPos.Y);
                 }
             }
         }

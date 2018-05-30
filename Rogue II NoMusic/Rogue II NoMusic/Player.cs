@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -45,8 +45,9 @@ namespace Rogue_II_NoMusic
         Window window;
         int counter = 0;
         public Point previouspos;
-        public Point pos = new Point(90,90);
+        public Point pos = new Point(300,300);
         public Rectangle rectangle;
+        bool enemyhasdied = false;
         public Player(Canvas c, Window w)
         {
             //Initialize stats
@@ -62,8 +63,10 @@ namespace Rogue_II_NoMusic
             rectangle.Width = 30;
             //rectangle.Fill = Brushes.White;
             rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("@.png", UriKind.Relative)));
+            Canvas.SetLeft(rectangle, pos.X);
+            Canvas.SetTop(rectangle, pos.Y);
             canvas.Children.Add(rectangle);
-            rectangle.Visibility = Visibility.Hidden;
+            rectangle.Visibility = Visibility.Visible;
         }
         public void move(Key key)
         {
@@ -121,8 +124,12 @@ namespace Rogue_II_NoMusic
                         break;
                     case Type.Consumable:
                         Inventory[conSlot] = item;
+                        MaxHP += 2;
                         break;
                     case Type.Gold:
+                        GoldCount += item.GoldCount;
+                        break;
+                    case Type.Collectible:
                         GoldCount += item.GoldCount;
                         break;
                     default:
@@ -167,13 +174,13 @@ namespace Rogue_II_NoMusic
             points[3] = down;
 
             bool combat = false;
-            if (enemy.alive == true && Alive == true)
+            if (Alive == true)
             {
 
 
                 for (int i = 0; i < 4; i++)
                 {
-                    if (enemy.enemyPos == points[i])
+                    if (enemy.enemyPos == points[i]&&enemy.alive==true)
                     {
                         combat = true;
                         if (r.Next(0, Level + 1) < Level)
@@ -198,7 +205,7 @@ namespace Rogue_II_NoMusic
                         }
 
                     }
-                    if (enemy.bossPos == points[i])
+                    if (enemy.bossPos == points[i] && enemy.bossalive == true)
                     {
                         combat = true;
                         if (r.Next(0, Level + 1) < Level)
@@ -215,6 +222,8 @@ namespace Rogue_II_NoMusic
                         if (r.Next(0, enemy.bosslevel + 1) < enemy.bosslevel)
                         {
                             le.Content = "Mini Boss" + " Hit";
+                            int dmg = enemy.bossStrength - Armour;
+                            HP -= dmg;
                         }
                         else
                         {
@@ -228,11 +237,16 @@ namespace Rogue_II_NoMusic
                     lp.Content = "";
                 }
                 Console.WriteLine(combat.ToString());
-                if (enemy.hp <= 0)
+                if (enemy.hp <= 0 && enemyhasdied == false)
                 {
+                    enemyhasdied = true;
                     le.Content = enemy.enemyType.ToString() + " Defeated";
                     enemy.death();
                     XP += enemy.level;
+                }
+                if(enemy.bossHP<=0)
+                {
+                    enemy.bossdeath();
                 }
             }
 
@@ -262,9 +276,9 @@ namespace Rogue_II_NoMusic
                 Level += 1;
             }
         }
-        public void death(Label l , Gameover gameover)
+        public void death(Label l, Gameover gameover)
         {
-            if(HP<=0)
+            if (HP <= 0)
             {
                 Alive = false;
                 l.Content = "Player Defeated";
@@ -274,6 +288,13 @@ namespace Rogue_II_NoMusic
                 lblGameoverText.Content = "Game Over.";
                 Label lblPlayAgain = new Label();
                 lblPlayAgain.Content = "Press 1 to Play Again.";
+            }
+        }
+        public void enemydont(Enemy e)
+        {
+            if(e.enemyPos == pos)
+            {
+                e.enemyPos = e.previousPos;
             }
         }
 
