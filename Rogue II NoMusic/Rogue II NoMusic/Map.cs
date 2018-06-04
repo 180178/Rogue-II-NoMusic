@@ -17,7 +17,7 @@ namespace Rogue_II_NoMusic
         Canvas canvas;
         Window window = new Window();
         List<Rectangle> rectangle = new List<Rectangle>();
-        int mapNum;
+        public int mapNum;
         string line;
         string tile;
         public int xPos;
