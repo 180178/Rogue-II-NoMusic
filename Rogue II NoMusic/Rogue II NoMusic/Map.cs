@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,8 +17,7 @@ namespace Rogue_II_NoMusic
         Canvas canvas;
         Window window = new Window();
         List<Rectangle> rectangle = new List<Rectangle>();
-        public int mapNum;
-        enum maplist { Hoth }
+        int mapNum;
         string line;
         string tile;
         public int xPos;
@@ -30,9 +29,14 @@ namespace Rogue_II_NoMusic
         public Map(Canvas C)
         {
             canvas = C;
-            if(mapNum == 0)
+            if (mapNum == 0)
             {
                 wallcolour = Brushes.CornflowerBlue;
+            }
+
+            if (mapNum == 1)
+            {
+                wallcolour = Brushes.SlateGray;
             }
         }
 
@@ -90,7 +94,16 @@ namespace Rogue_II_NoMusic
                 }
             }
         }
-        //Player collides with wall
+
+        public void deleteMap()
+        {
+            for (int i = 0; i < rectangle.Count(); i++)
+            {
+                canvas.Children.Remove(rectangle[i]);
+            }
+            rectangle.RemoveRange(0, 1);
+        }
+
         public void mapCollide(Player p)
         {
             for (int i = 0; i < rectangle.Count; i++)
@@ -104,7 +117,6 @@ namespace Rogue_II_NoMusic
                 }
             }
         }
-        //Same as above just with the enemy instead
         public void mapCollide(Enemy e)
         {
             for (int i = 0; i < rectangle.Count; i++)
@@ -118,7 +130,6 @@ namespace Rogue_II_NoMusic
                 }
             }
         }
-        //Again converts Rectangles to Rectd for ease of collision detection
         public Rect RectangleToRect(Rectangle rectangle)
         {
             double xpos = Canvas.GetLeft(rectangle);
