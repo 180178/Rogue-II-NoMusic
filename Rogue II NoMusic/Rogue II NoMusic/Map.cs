@@ -101,7 +101,7 @@ namespace Rogue_II_NoMusic
             {
                 canvas.Children.Remove(rectangle[i]);
             }
-            rectangle.RemoveRange(0, 1);
+            rectangle.RemoveRange(0, rectangle.Count - 1);
         }
 
         public void mapCollide(Player p)
