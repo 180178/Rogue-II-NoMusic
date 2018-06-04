@@ -18,6 +18,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("deathsticks.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("helmet.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("map0.txt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("map1.txt")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("pants.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("stormtrooperforward.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("sword.png")]

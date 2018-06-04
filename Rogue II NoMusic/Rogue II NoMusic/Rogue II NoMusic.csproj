@@ -129,6 +129,9 @@
     <Content Include="map0.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="map1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="pants.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

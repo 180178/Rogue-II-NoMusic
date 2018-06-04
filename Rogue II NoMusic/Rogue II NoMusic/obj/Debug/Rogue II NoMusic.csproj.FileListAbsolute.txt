@@ -26,3 +26,6 @@ E:\Rogue II NoMusic\Rogue II NoMusic\obj\Debug\Rogue II NoMusic.csproj.GenerateR
 E:\Rogue II NoMusic\Rogue II NoMusic\obj\Debug\Rogue II NoMusic.csproj.CoreCompileInputs.cache
 E:\Rogue II NoMusic\Rogue II NoMusic\obj\Debug\Rogue II NoMusic.exe
 E:\Rogue II NoMusic\Rogue II NoMusic\obj\Debug\Rogue II NoMusic.pdb
+E:\Rogue II NoMusic\Rogue II NoMusic\bin\Debug\map1.txt
+E:\Rogue II NoMusic\Rogue II NoMusic\bin\Debug\Rogue II NoMusic.exe.config
+E:\Rogue II NoMusic\Rogue II NoMusic\bin\Debug\Rogue II NoMusic.pdb

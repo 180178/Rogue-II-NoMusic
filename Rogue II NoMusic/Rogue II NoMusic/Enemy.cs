@@ -109,28 +109,6 @@ namespace Rogue_II_NoMusic
                 //minibossRectangle.Visibility = Visibility.Hidden;
 
             }
-            if (levelProgress == 3)
-            {
-                //third generic enemy
-                enemyRectangle.Fill = Brushes.Yellow;
-                Canvas.SetLeft(enemyRectangle, 100);
-                hp = 33;
-                maxHP = 33;
-                strength = 30;
-                armour = 5;
-                level = 8;
-                canvas.Children.Add(enemyRectangle);
-                //enemyRectangle.Visibility = Visibility.Hidden;
-                //third miniboss
-                minibossRectangle.Fill = Brushes.Red;
-                Canvas.SetLeft(minibossRectangle, 150);
-                bossHP = 44;
-                maxHP = 44;
-                bossStrength = 38;
-                bossArmour = 17;
-
-            }
-
         }
 
         public void enemyMove(Player player)
@@ -259,14 +237,16 @@ namespace Rogue_II_NoMusic
 
         public void death()
         {
-            canvas.Children.Remove(enemyRectangle);
+            //canvas.Children.Remove(enemyRectangle);
+            enemyRectangle.Visibility = Visibility.Hidden;
             alive = false;
             //player.XP = player.XP + (level * 10);
         }
         public void bossdeath()
         {
             bossalive = false;
-            canvas.Children.Remove(minibossRectangle);
+            minibossRectangle.Visibility = Visibility.Hidden;
+            //canvas.Children.Remove(minibossRectangle);
             //Level Win Screen
             //Next Level
         }

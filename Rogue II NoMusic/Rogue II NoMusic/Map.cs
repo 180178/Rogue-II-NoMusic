@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,7 +24,7 @@ namespace Rogue_II_NoMusic
         public int yPos = 0;
         public string[,] grid = new string[40, 20];
         Brush wallcolour;
-        int lineNumber = -1;
+        
 
         public Map(Canvas C)
         {
@@ -43,9 +43,13 @@ namespace Rogue_II_NoMusic
         //A method to generate a given map from the read file.
         public void generateMap(int mapLevel)
         {
+            int lineNumber = -1;
             mapNum = mapLevel;
-            mapNum = 0;
-
+            //mapNum = 0;
+            if (mapNum == 1)
+            {
+                wallcolour = Brushes.SlateGray;
+            }
             //Generates a grid from the text file that can be read by other classes and used to generate the map.
             StreamReader streamReader = new System.IO.StreamReader("map" + mapNum + ".txt");
             while (!streamReader.EndOfStream)
@@ -101,7 +105,7 @@ namespace Rogue_II_NoMusic
             {
                 canvas.Children.Remove(rectangle[i]);
             }
-            rectangle.RemoveRange(0, rectangle.Count - 1);
+            rectangle.RemoveRange(0, rectangle.Count-1);
         }
 
         public void mapCollide(Player p)

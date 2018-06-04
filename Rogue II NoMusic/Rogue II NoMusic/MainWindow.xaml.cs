@@ -151,7 +151,7 @@ namespace Rogue_II_NoMusic
                         player.rectangle.Visibility = Visibility.Visible;
                         generateScreen();
                         map = new Map(canvas);
-                        map.generateMap(1);
+                        map.generateMap(0);
                         enemy = new Enemy(canvas, this);
                     }
                 }
@@ -261,6 +261,7 @@ namespace Rogue_II_NoMusic
                     player.XPUpdate();
                     player.death(lblCombat, gameover,map);
                     screenUpdate();
+                    gamewin();
 
                 }
             }
@@ -369,10 +370,20 @@ namespace Rogue_II_NoMusic
             {
                 Level ++;
                 enemy.bossalive = true;
+                enemy.bossHP = enemy.bossMaxHP;
                 enemy.alive = true;
+                enemy.hp = enemy.maxHP;
+                player.pos = new Point(300, 300);
                 enemy.enemyPos = new Point(120, 90);
                 player.HP = player.MaxHP;
                 enemy.levelProgress++;
+                map.deleteMap();
+                GenerateItems();
+                map.generateMap(1);
+                enemy.enemyPos = new Point(120, 90);
+                enemy.minibossRectangle.Visibility = Visibility.Visible;
+                enemy.enemyRectangle.Visibility = Visibility.Visible;
+
             }
         }
     }

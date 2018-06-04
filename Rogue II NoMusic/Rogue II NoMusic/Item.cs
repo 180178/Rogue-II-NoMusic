@@ -48,7 +48,7 @@ namespace Rogue_II_NoMusic
             switch (type)
             {
                 case Type.Melee:
-                    StrBoost = r.Next(level, (level + 1) ^ 2 + 1);
+                    StrBoost = r.Next(level, level + 1);
                     rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("sword.png", UriKind.Relative)));
                     break;
                 case Type.Ranged:
@@ -72,7 +72,7 @@ namespace Rogue_II_NoMusic
                     rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("deathSticks.png", UriKind.Relative)));
                     break;
                 case Type.Gold:
-                    GoldCount = r.Next(level * 2, level ^ 3 + 1);
+                    GoldCount = r.Next(level * 2,  level*3);
                     rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("brick.png", UriKind.Relative)));
                     break;
                 case Type.Collectible:
