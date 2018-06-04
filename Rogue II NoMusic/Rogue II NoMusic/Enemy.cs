@@ -16,7 +16,7 @@ namespace Rogue_II_NoMusic
         
         Canvas canvas;
         Map map;
-        int levelProgress = 1;
+        public int levelProgress = 1;
         Window window;
         //the point where the enemy is located
         public Point enemyPos = new Point(120,90);
@@ -36,6 +36,7 @@ namespace Rogue_II_NoMusic
         public int bossArmour;
         public int bosslevel;
         ImageBrush stormtSprite = new ImageBrush(new BitmapImage(new Uri("StormtrooperForward.png", UriKind.Relative)));
+        ImageBrush bosssprite;
         //higher level, more exp for player
         public int level;
         public string enemyType;
@@ -83,25 +84,28 @@ namespace Rogue_II_NoMusic
             }
             if (levelProgress == 2)
             {
+                //bosssprite = new ImageBrush(new BitmapImage(new Uri()));
                 // second generic enemy
-                enemyRectangle.Fill = Brushes.Blue;
-                Canvas.SetLeft(enemyRectangle, 100);
+                enemyRectangle.Fill = stormtSprite;
+                Canvas.SetLeft(enemyRectangle, enemyPos.X);
+                Canvas.SetTop(enemyRectangle, enemyPos.Y);
                 hp = 22;
                 maxHP = 22;
                 strength = 22;
                 armour = 6;
                 level = 5;
-                canvas.Children.Add(enemyRectangle);
+                //canvas.Children.Add(enemyRectangle);
                 //enemyRectangle.Visibility = Visibility.Hidden;
                 // second miniboss
                 minibossRectangle.Fill = Brushes.Red;
-                Canvas.SetLeft(minibossRectangle, 150);
+                Canvas.SetLeft(minibossRectangle, bossPos.X);
+                Canvas.SetTop(minibossRectangle, bossPos.Y);
                 bossHP = 30;
                 bossMaxHP = 30;
                 bossStrength = 20;
                 bossArmour = 11;
                 level = 10;
-                canvas.Children.Add(minibossRectangle);
+                //canvas.Children.Add(minibossRectangle);
                 //minibossRectangle.Visibility = Visibility.Hidden;
 
             }

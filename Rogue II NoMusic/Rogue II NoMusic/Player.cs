@@ -48,6 +48,8 @@ namespace Rogue_II_NoMusic
         public Point pos = new Point(300,300);
         public Rectangle rectangle;
         bool enemyhasdied = false;
+
+        //Player constructor
         public Player(Canvas c, Window w)
         {
             //Initialize stats
@@ -68,6 +70,7 @@ namespace Rogue_II_NoMusic
             canvas.Children.Add(rectangle);
             rectangle.Visibility = Visibility.Visible;
         }
+        //Alows player to move
         public void move(Key key)
         {
             previouspos = pos;
@@ -94,12 +97,7 @@ namespace Rogue_II_NoMusic
             Canvas.SetLeft(rectangle, pos.X);
             Canvas.SetTop(rectangle, pos.Y);
         }
-        //Change parameter to Map map
-        public void reveal()
-        {
-
-        }
-        //Changed to Item[] itemArray
+        //Picks up item
         public void itemPickUp(Item item)
         {
             if (this.pos == item.pos && item.VisibleOverride == false)
@@ -137,10 +135,19 @@ namespace Rogue_II_NoMusic
                 }
             }
             Armour = 4;
-            if (Inventory[meleeSlot] != null)
+            if (Inventory[meleeSlot] != null&&Inventory[rangedSlot]!=null)
             {
-                MaxStrength = 16 + Inventory[meleeSlot].StrBoost;
+                MaxStrength = 16 + Inventory[meleeSlot].StrBoost+Inventory[rangedSlot].StrBoost;
             }
+            else if (Inventory[rangedSlot] != null)
+            {
+                MaxStrength = 16+ Inventory[rangedSlot].StrBoost;
+            }
+            else if (Inventory[meleeSlot] != null)
+            {
+                MaxStrength = 16+Inventory[meleeSlot].StrBoost;
+            }
+
             if (Inventory[helmetSlot] != null)
             {
                 Armour += Inventory[helmetSlot].ArmourBoost;
@@ -153,12 +160,8 @@ namespace Rogue_II_NoMusic
             {
                 Armour += Inventory[pantsSlot].ArmourBoost;
             }
-            if (Inventory[rangedSlot] != null)
-            {
-                RangedDmg = Inventory[rangedSlot].RangedDmg;
-            }
         }
-        //Change to Enemy enemy
+        //Handles all combat
         public void melee(Enemy enemy, Label lp, Label le)
         {
             Console.WriteLine("Enemy " + enemy.enemyPos.ToString());
@@ -251,7 +254,7 @@ namespace Rogue_II_NoMusic
             }
 
         }
-        //Change to Enemy[] enemyArray, change 8 to enemyArray.Length
+        //Decided to remove this feature, left the method here for maybe later use
         public void ranged(Point[] pArray)
         {
             if (Keyboard.IsKeyDown(Key.LeftShift) && Keyboard.IsKeyDown(Key.A))
@@ -267,6 +270,7 @@ namespace Rogue_II_NoMusic
                 }
             }
         }
+        //Increases level based on XP
         public void XPUpdate()
         {
             int previousXP = XP;
@@ -276,35 +280,25 @@ namespace Rogue_II_NoMusic
                 Level += 1;
             }
         }
-        public void death(Label l, Gameover gameover)
+        //Checks if player is dead
+        public void death(Label l, Gameover gameover,Map m)
         {
             if (HP <= 0)
             {
+                int maplevel = m.mapNum+1;
                 Alive = false;
                 l.Content = "Player Defeated";
                 rectangle.Visibility = Visibility.Hidden;
-                gameover.gameoverScreen.Visibility = Visibility.Visible;
-                Label lblGameoverText = new Label();
-                lblGameoverText.Content = "Game Over.";
-                Label lblPlayAgain = new Label();
-                lblPlayAgain.Content = "Press 1 to Play Again.";
-                Canvas.SetTop(lblPlayAgain, 690);
-                Canvas.SetLeft(lblPlayAgain, 300);
-                Canvas.SetTop(lblGameoverText, 690);
-                lblGameoverText.FontSize = 30;
-                lblPlayAgain.FontSize = 30;
-                lblPlayAgain.Foreground = Brushes.White;
-                lblGameoverText.Foreground = Brushes.White;
-                canvas.Children.Add(lblGameoverText);
-                canvas.Children.Add(lblPlayAgain);
-                if(Keyboard.IsKeyDown(Key.D1))
-                {
-                    System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-                    Application.Current.Shutdown();
-
-                }
+                //gameover.gameoverScreen.Visibility = Visibility.Visible;
+                //Label lblGameoverText = new Label();
+                //lblGameoverText.Content = "Game Over.";
+                //Label lblPlayAgain = new Label();
+                //lblPlayAgain.Content = "Press 1 to Play Again.";
+                gameover.endgame();
+                gameover.endgamescore(this, maplevel);
             }
         }
+        //Prevents enemy and player being on the same tile
         public void enemydont(Enemy e)
         {
             if(e.enemyPos == pos)

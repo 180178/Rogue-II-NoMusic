@@ -17,7 +17,7 @@ namespace Rogue_II_NoMusic
         Canvas canvas;
         Window window = new Window();
         List<Rectangle> rectangle = new List<Rectangle>();
-        int mapNum;
+        public int mapNum;
         enum maplist { Hoth }
         string line;
         string tile;
@@ -90,6 +90,7 @@ namespace Rogue_II_NoMusic
                 }
             }
         }
+        //Player collides with wall
         public void mapCollide(Player p)
         {
             for (int i = 0; i < rectangle.Count; i++)
@@ -103,6 +104,7 @@ namespace Rogue_II_NoMusic
                 }
             }
         }
+        //Same as above just with the enemy instead
         public void mapCollide(Enemy e)
         {
             for (int i = 0; i < rectangle.Count; i++)
@@ -116,6 +118,7 @@ namespace Rogue_II_NoMusic
                 }
             }
         }
+        //Again converts Rectangles to Rectd for ease of collision detection
         public Rect RectangleToRect(Rectangle rectangle)
         {
             double xpos = Canvas.GetLeft(rectangle);

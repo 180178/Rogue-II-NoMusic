@@ -20,7 +20,7 @@ namespace Rogue_II_NoMusic
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+     public partial class MainWindow : Window
     {
         GameState gamestate = GameState.StartScreen;
         //string[] songList = { "04 Emperor's Throne Room.mp3", "03 Battle Of The Heroes.mp3", "02 The Millennium Falcon_Imperial Cruiser Pursuit.mp3", "10 Mos Eisley Spaceport.mp3", "11 Cantina Band.mp3", "02 Duel Of The Fates.mp3", "12 Cantina Band #2.mp3" };
@@ -46,7 +46,7 @@ namespace Rogue_II_NoMusic
         bool IntroHasRun = false;
         int keycounter = 0;
         //Intro Variables Over
-
+        
         //UI Elements
         Label level;
         Label gold;
@@ -65,7 +65,7 @@ namespace Rogue_II_NoMusic
             {
                 PlayIntro();
             }
-            gameover = new Gameover(canvas, this);
+            gameover = new Gameover(canvas,this);
             controls = new Rectangle();
             controls.Visibility = Visibility.Hidden;
             controls.Height = 800;
@@ -73,7 +73,7 @@ namespace Rogue_II_NoMusic
             controls.Fill = new ImageBrush(new BitmapImage(new Uri("controls.png", UriKind.Relative)));
             canvas.Children.Add(controls);
         }
-        //Initializes and Runs the Intro- Ends with the song or the escape key
+        //Initializes and Runs the Intro- Ends with the song or the escape key, starts timer
         private void PlayIntro()
         {
             timer.Interval = new TimeSpan(0, 0, 0, 0, 100 / 60);
@@ -169,6 +169,7 @@ namespace Rogue_II_NoMusic
             ackbar.Visibility = Visibility.Hidden;
             player.rectangle.Visibility = Visibility.Visible;
         }
+        //Calls next song in the array
         /*private void NextSong()
         {
             music.Stop();
@@ -178,6 +179,7 @@ namespace Rogue_II_NoMusic
             music.Open(new Uri((songLink), UriKind.Relative));
             music.Play();
         }
+        //Same as above but an event
         private void NextSongEvent(object sender, EventArgs e)
         {
             music.Stop();
@@ -192,15 +194,20 @@ namespace Rogue_II_NoMusic
         private void key(object sender, KeyEventArgs e)
         {
             keycounter++;
-            if(keycounter==25)
+            if(keycounter>=25)
             {
                 keycounter = 0;
                 if(player.HP<player.MaxHP)
                 {
                     player.HP += 1;
                 }
-                
+                if (player.Strength != player.MaxStrength)
+                {
+                    player.Strength += 1;
+                }
+
             }
+            //Displays Controls
             if (e.Key == Key.F1)
             {
                 if (controls.Visibility == Visibility.Hidden)
@@ -230,16 +237,10 @@ namespace Rogue_II_NoMusic
             {
                 if (gamestate == GameState.GameOn)
                 {
-                    if (e.Key == Key.R)
+                    if(e.Key == Key.R)
                     {
-                        //Rest
-                        if (player.Strength != player.MaxStrength)
-                        {
-                            player.Strength += 1;
-                        }
-                        player.XP += 1;
+                        keycounter += 2;
                     }
-
                     for (int i = 0; i < items.Length; i++)
                     {
                         Item it = items[i];
@@ -258,12 +259,13 @@ namespace Rogue_II_NoMusic
                     map.mapCollide(enemy);
                     player.melee(enemy, lblCombat, lblCombatEnemy);
                     player.XPUpdate();
-                    player.death(lblCombat, gameover);
+                    player.death(lblCombat, gameover,map);
                     screenUpdate();
 
                 }
             }
         }
+        //Generates random items in random positions
         private void GenerateItems()
         {
             for (int i = 0; i < items.Length; i++)
@@ -277,10 +279,11 @@ namespace Rogue_II_NoMusic
                 {
                     type = Type.Collectible;
                 }
-                Point itempos = new Point(r.Next(0, 30) * 30, r.Next(0, 20) * 30);
+                Point itempos = new Point(r.Next(0, 40) * 30, r.Next(0, 20) * 30);
                 items[i] = new Item(canvas, this, itempos, type, Level);
             }
         }
+        //Generates label for player stats
         private void generateScreen()
         {
             level = new Label();
@@ -349,6 +352,7 @@ namespace Rogue_II_NoMusic
             exp.FontSize = 18;
             exp.Foreground = Brushes.White;
         }
+        //Updates stat boxes
         private void screenUpdate()
         {
             level.Content = "Level:         " + Level;
@@ -357,6 +361,19 @@ namespace Rogue_II_NoMusic
             strength.Content = "Str:  " + player.Strength + "(  " + player.MaxStrength + ")";
             hp.Content = "HP:  " + player.HP + "(  " + player.MaxHP + ")";
             gold.Content = "Gold:       " + player.GoldCount;
+        }
+        //Checks if game is won, if boss is dead
+        public void gamewin()
+        {
+            if(enemy.bossalive == false)
+            {
+                Level ++;
+                enemy.bossalive = true;
+                enemy.alive = true;
+                enemy.enemyPos = new Point(120, 90);
+                player.HP = player.MaxHP;
+                enemy.levelProgress++;
+            }
         }
     }
 }

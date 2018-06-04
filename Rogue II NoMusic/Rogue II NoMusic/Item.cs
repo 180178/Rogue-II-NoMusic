@@ -32,6 +32,7 @@ namespace Rogue_II_NoMusic
         public int GoldCount;
         public bool isVisible = false;
         public bool VisibleOverride = false;
+        //Item Constructor
         public Item(Canvas c, Window w, Point p, Type t, int level)
         {
             canvas = c;
@@ -51,7 +52,7 @@ namespace Rogue_II_NoMusic
                     rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("sword.png", UriKind.Relative)));
                     break;
                 case Type.Ranged:
-                    RangedDmg = r.Next(level, level * 3 + 1);
+                    StrBoost = r.Next(level, level * 3 + 1);
                     rectangle.Fill = new ImageBrush(new BitmapImage(new Uri("blaster.png", UriKind.Relative)));
                     break;
                 case Type.Helmet:
@@ -83,6 +84,7 @@ namespace Rogue_II_NoMusic
             }
             canvas.Children.Add(rectangle);
         }
+        //Makes item invisible/visible depending on player proximity
         public void ItemVisibility(Player player)
         {
             rectangle.Visibility = Visibility.Hidden;
@@ -103,6 +105,8 @@ namespace Rogue_II_NoMusic
                 }
             }*/
         }
+
+        //Converts Rectangles to Rects for ease of collision
         public Rect RectangleToRect(Rectangle rectangle)
         {
             double xpos = Canvas.GetLeft(rectangle);
